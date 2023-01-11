@@ -1,4 +1,6 @@
 node_modules/
-.env
 .vscode/
 .yarn/
+
+*.env
+!example.env
