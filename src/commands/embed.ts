@@ -24,19 +24,25 @@ export class EmbedCommand {
 		const titleInput = new TextInputBuilder()
 			.setCustomId('title')
 			.setLabel('Title')
-			.setPlaceholder('Title')
-			.setStyle(TextInputStyle.Short);
+			.setStyle(TextInputStyle.Short)
+			.setRequired();
 		
 		const descriptionInput = new TextInputBuilder()
 			.setCustomId('description')
 			.setLabel('Description')
-			.setPlaceholder('Description')
 			.setStyle(TextInputStyle.Paragraph);
+
+		const colorInput = new TextInputBuilder()
+			.setCustomId('color')
+			.setLabel('Color')
+			.setStyle(TextInputStyle.Short)
+
 		
 		const row1 = new ActionRowBuilder<TextInputBuilder>().addComponents(titleInput);
 		const row2 = new ActionRowBuilder<TextInputBuilder>().addComponents(descriptionInput);
+		const row3 = new ActionRowBuilder<TextInputBuilder>().addComponents(colorInput);
 
-		modal.addComponents(row1, row2);
+		modal.addComponents(row1, row2, row3);
 		interaction.showModal(modal);
 	}
 
@@ -45,14 +51,17 @@ export class EmbedCommand {
 		const channel = interaction.client.channels.cache.get(interaction.customId.split('-')[1]) as TextChannel;
 		const title = interaction.fields.getTextInputValue('title');
 		const description = interaction.fields.getTextInputValue('description');
+		const color = interaction.fields.getTextInputValue('color') || '255 0 0';
 
 		const embed = new EmbedBuilder()
 			.setTitle(title)
 			.setDescription(description)
-			.setColor([255, 0, 0]);
+			.setColor(color.split(' '))
+			.setTimestamp()
+			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.avatarURL});
 		
 		await channel.send({ embeds: [embed] });
-		await interaction.reply({ content: 'Embed Sent!', ephemeral: true });
+		await interaction.reply({ content: 'Embed sent!', ephemeral: true });
 	}
 
 }
