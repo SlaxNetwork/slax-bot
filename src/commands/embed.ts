@@ -25,7 +25,6 @@ export class EmbedCommand {
 			.setCustomId('title')
 			.setLabel('Title')
 			.setStyle(TextInputStyle.Short)
-			.setRequired();
 		
 		const descriptionInput = new TextInputBuilder()
 			.setCustomId('description')
