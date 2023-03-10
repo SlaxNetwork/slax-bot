@@ -57,7 +57,6 @@ export class EmbedCommand {
 			.setDescription(description)
 			.setColor(color.split(' '))
 			.setTimestamp()
-			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.avatarURL});
 		
 		await channel.send({ embeds: [embed] });
 		await interaction.reply({ content: 'Embed sent!', ephemeral: true });
